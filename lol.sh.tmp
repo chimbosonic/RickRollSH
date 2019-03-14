@@ -1,5 +1,18 @@
 #!/bin/bash
-# Rick Astley in your Terminal.
+#This is a ugly but amazing hack if the script is being piped into bash
+#This if statement gets read into bash then it redirects of the rest of the data to a new file
+#Once this is done we exectute that file
+if [[ ! $BASH_SOURCE ]]; then
+	touch /tmp/lol.sh
+	chmod +x /tmp/lol.sh
+	cat /dev/stdin > /tmp/lol.sh
+	/tmp/lol.sh
+fi
+
+
+#!/bin/bash
+#Actual start of the script :) 
+#Rick Astley in your Terminal.
 # By Serene Han and Justine Tunney <3
 # Improved by Alexis Lowe aka Chimbosonic
 
