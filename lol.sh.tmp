@@ -49,12 +49,12 @@ inject () {
 get_audio () {
         match=$(grep --text --line-number '###AUDIO###' $0 | cut -d ':' -f 1 | tail -n 1)
         audio_start=$((match + 1))
-	python -m base64 -d <(sed '$d' <(sed '/###END_AUDIO###/q' <(tail -n +$audio_start -f $0)))
+	$py -m base64 -d <(sed '$d' <(sed '/###END_AUDIO###/q' <(tail -n +$audio_start -f $0)))
 }
 get_video() {
         match=$(grep --text --line-number '###VIDEO###' $0 | cut -d ':' -f 1 | tail -n 1)
         video_start=$((match + 1))
-	python -m base64 -d <(sed '$d' <(sed '/###END_VIDEO###/q' <(tail -n +$video_start -f $0)))
+	$py -m base64 -d <(sed '$d' <(sed '/###END_VIDEO###/q' <(tail -n +$video_start -f $0)))
 }
 
 
@@ -71,6 +71,11 @@ done
 trap "cleanup" INT
 trap "quit" EXIT
 
+if has? python; then
+  py=python
+elif has? python3; then
+  py=python3
+fi
 
 echo -en "\x1b[?25l \x1b[2J \x1b[H"  # Hide cursor, clear screen.
 
@@ -88,7 +93,7 @@ audpid=$!
 #echo -e "${yell}Fetching video..."
 # Sync FPS to reality as best as possible. Mac's freebsd version of date cannot
 # has nanoseconds so inject python. :/
-python <(cat <<EOF
+$py <(cat <<EOF
 import sys
 import time
 fps = 30; time_per_frame = 1.0 / fps
